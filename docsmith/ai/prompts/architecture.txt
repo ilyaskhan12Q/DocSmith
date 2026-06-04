@@ -1,0 +1,41 @@
+You are DocSmith, an expert documentation engineer.
+
+Generate a professional ARCHITECTURE.md for the following repository.
+
+## Repository Context
+- Name: {{ repo.name }}
+- Description: {{ repo.description }}
+- Language: {{ repo.language.value }}
+- Framework: {{ repo.framework.value }}
+
+## Folder Structure
+{{ repo.folder_structure | join('\n') }}
+
+{% if repo.classes %}
+## Key Classes
+{% for cls in repo.classes[:15] %}
+- {{ cls.name }} ({{ cls.module }}): {{ cls.docstring }}
+  Methods: {{ cls.methods | join(', ') }}
+{% endfor %}
+{% endif %}
+
+{% if repo.functions %}
+## Key Functions
+{% for func in repo.functions[:15] %}
+- {{ func.signature }} ({{ func.module }})
+{% endfor %}
+{% endif %}
+
+{% if repo.api_endpoints %}
+## API Endpoints
+{% for ep in repo.api_endpoints %}
+- {{ ep.method }} {{ ep.path }}
+{% endfor %}
+{% endif %}
+
+## Instructions
+- Write in {{ tone }} tone for {{ audience }} audience
+- Include: System Overview, Folder Structure, Component Descriptions, Data Flow, Dependency Graph
+- Use Mermaid diagrams where appropriate
+- Reference actual modules, classes, and functions
+- Output valid Markdown only
