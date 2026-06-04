@@ -35,7 +35,7 @@ class TestDocSmithConfig:
     def test_get_model_default(self):
         config = DocSmithConfig()
         model = config.get_model()
-        assert model == "gemini-2.0-flash"
+        assert model == "gemini-2.5-flash"
 
     def test_get_model_custom(self):
         config = DocSmithConfig(
