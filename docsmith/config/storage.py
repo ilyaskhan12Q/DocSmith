@@ -36,7 +36,7 @@ def load_config() -> DocSmithConfig:
             data = json.loads(CONFIG_FILE.read_text(encoding="utf-8"))
             return DocSmithConfig.model_validate(data)
         except (json.JSONDecodeError, Exception) as e:
-            console.print(f"[yellow]⚠ Could not parse config file: {e}[/yellow]")
+            console.print(f"[yellow] Could not parse config file: {e}[/yellow]")
             console.print("[dim]Using default configuration.[/dim]")
 
     return DocSmithConfig()

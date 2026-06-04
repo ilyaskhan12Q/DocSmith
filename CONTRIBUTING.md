@@ -1,8 +1,8 @@
 # Contributing to DocSmith
 
-Thank you for considering contributing to DocSmith! 🎉
+Thank you for considering contributing to DocSmith! 
 
-## 🚀 Getting Started
+## Getting Started
 
 1. **Fork** the repository
 2. **Clone** your fork:
@@ -17,7 +17,7 @@ Thank you for considering contributing to DocSmith! 🎉
    pip install -e ".[dev,all-providers]"
    ```
 
-## 🔧 Development Workflow
+## Development Workflow
 
 ### Branch naming
 
@@ -36,7 +36,7 @@ Thank you for considering contributing to DocSmith! 🎉
 6. Push: `git push origin feat/my-feature`
 7. Open a Pull Request
 
-## 🧪 Testing
+## Testing
 
 ```bash
 # Run all tests
@@ -49,7 +49,7 @@ pytest --cov=docsmith --cov-report=term-missing
 pytest tests/test_analyzer.py -v
 ```
 
-## 📐 Code Style
+## Code Style
 
 We use **ruff** for both linting and formatting:
 
@@ -72,7 +72,7 @@ ruff format .
 - No wildcard imports
 - No mutable default arguments
 
-## 📁 Project Structure
+## Project Structure
 
 | Directory | Purpose |
 |-----------|---------|
@@ -85,7 +85,7 @@ ruff format .
 | `docsmith/output/` | File output and terminal preview |
 | `tests/` | Test suite |
 
-## 📝 Commit Messages
+## Commit Messages
 
 Follow [Conventional Commits](https://www.conventionalcommits.org/):
 
@@ -96,7 +96,7 @@ Follow [Conventional Commits](https://www.conventionalcommits.org/):
 - `refactor:` — code refactoring
 - `chore:` — maintenance
 
-## 🐛 Reporting Bugs
+## Reporting Bugs
 
 Open an issue with:
 - DocSmith version (`docsmith version`)
@@ -104,7 +104,7 @@ Open an issue with:
 - Steps to reproduce
 - Expected vs actual behavior
 
-## 💡 Feature Requests
+## Feature Requests
 
 Open an issue with the `enhancement` label describing:
 - The problem you're trying to solve
@@ -113,4 +113,4 @@ Open an issue with the `enhancement` label describing:
 
 ---
 
-Thank you for helping make DocSmith better! ❤️
+Thank you for helping make DocSmith better! 

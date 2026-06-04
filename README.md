@@ -2,7 +2,7 @@
 
 <img src="https://img.shields.io/badge/DocSmith-AI%20Documentation%20Engineer-blue?style=for-the-badge&logo=markdown&logoColor=white" alt="DocSmith">
 
-# 🔨 DocSmith
+# DocSmith
 
 ### AI-powered documentation engineer for GitHub repositories
 
@@ -14,31 +14,31 @@
 
 **Stop writing docs manually.** DocSmith analyzes your GitHub repository, extracts real code intelligence, and generates production-ready documentation that references your actual architecture, APIs, and functions.
 
-[Getting Started](#-getting-started) •
-[How It Works](#-how-it-works) •
-[Features](#-features) •
-[Providers](#-ai-providers) •
-[Contributing](#-contributing)
+[Getting Started](#getting-started) •
+[How It Works](#how-it-works) •
+[Features](#features) •
+[Providers](#ai-providers) •
+[Contributing](#contributing)
 
 </div>
 
 ---
 
-## ✨ Why DocSmith?
+## Why DocSmith?
 
 Most doc generators produce **generic AI slop**. DocSmith is different:
 
-- 🔍 **Analyzes your actual codebase** — detects frameworks, dependencies, APIs, CLI commands, and architecture
-- 🧠 **Builds structured intelligence** — never sends raw code to an LLM; always analyzes first
-- 📝 **Generates repo-specific docs** — every reference points to real code, real files, real functions
-- 🔎 **Reviews its own output** — catches hallucinations, missing sections, and broken references
-- 📊 **Scores quality** — rates completeness, correctness, examples, usability (0–100)
-- 🔄 **Self-refines** — fixes issues automatically before output
+- **Analyzes your actual codebase** — detects frameworks, dependencies, APIs, CLI commands, and architecture
+- **Builds structured intelligence** — never sends raw code to an LLM; always analyzes first
+- **Generates repo-specific docs** — every reference points to real code, real files, real functions
+- **Reviews its own output** — catches hallucinations, missing sections, and broken references
+- **Scores quality** — rates completeness, correctness, examples, usability (0–100)
+- **Self-refines** — fixes issues automatically before output
 
-## 🎬 Demo
+## Demo
 
 ```bash
-$ docsmith generate https://github.com/tiangolo/fastapi --quick
+$ docsmith generate https://github.com/ilyaskhan12Q/Docsmith.git
 
     ____             _____           _ __  __
    / __ \____  _____/ ___/____ ___  (_) /_/ /_
@@ -48,7 +48,7 @@ $ docsmith generate https://github.com/tiangolo/fastapi --quick
 
   v0.1.0 — AI-powered documentation engineer
 
-🔍 Analyzing tiangolo/fastapi...
+ Analyzing tiangolo/fastapi...
 ✓ Repository metadata fetched
 ✓ File tree fetched (847 entries)
 ✓ Fetched 23 files
@@ -62,25 +62,25 @@ $ docsmith generate https://github.com/tiangolo/fastapi --quick
   Classes: 18
   API Endpoints: 0
 
-📋 Creating documentation plan...
+ Creating documentation plan...
 ✓ Plan created: 3 documents
 
-✍️  Generating documentation...
-📝 Generating README.md...
+  Generating documentation...
+ Generating README.md...
 ✓ README.md (4.2s, 3847 chars)
-📝 Generating CONTRIBUTING.md...
+ Generating CONTRIBUTING.md...
 ✓ CONTRIBUTING.md (3.1s, 2156 chars)
-📝 Generating ARCHITECTURE.md...
+ Generating ARCHITECTURE.md...
 ✓ ARCHITECTURE.md (5.7s, 4521 chars)
 
-🔍 Reviewing documentation...
+ Reviewing documentation...
   README.md: ✓ passed (score: 91)
   CONTRIBUTING.md: ✓ passed (score: 88)
   ARCHITECTURE.md: ✓ passed (score: 93)
 
 ✓ Written 3 files to docsmith-output/
 
-📊 Documentation Report
+ Documentation Report
 
 ┌──────────────────┬─────────┬─────────┬────────┬──────────┐
 │ Document         │  Score  │ Issues  │   Time │  Status  │
@@ -92,10 +92,10 @@ $ docsmith generate https://github.com/tiangolo/fastapi --quick
 │ Overall          │  91/100 │         │        │          │
 └──────────────────┴─────────┴─────────┴────────┴──────────┘
 
-📁 Output: docsmith-output/
+ Output: docsmith-output/
 ```
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Installation
 
@@ -149,7 +149,7 @@ docsmith generate owner/repo --preview
 docsmith generate owner/repo -o ./docs
 ```
 
-## ⚙️ How It Works
+## How It Works
 
 DocSmith follows a structured pipeline — it never sends raw code to an LLM:
 
@@ -194,10 +194,10 @@ Repository URL
 └──────┬──────┘
        │
        ▼
-  📄 Output
+   Output
 ```
 
-## 📋 Features
+## Features
 
 ### Document Types
 
@@ -234,7 +234,7 @@ Every generated document is scored on 5 dimensions:
 | Examples | 15% | Code examples quality |
 | Maintainability | 10% | Ease of keeping docs updated |
 
-## 🤖 AI Providers
+## AI Providers
 
 | Provider | Model | Install Extra |
 |----------|-------|---------------|
@@ -249,7 +249,7 @@ Switch providers at any time:
 docsmith config
 ```
 
-## 🏗️ Architecture
+## Architecture
 
 ```
 docsmith/
@@ -280,7 +280,7 @@ docsmith/
 └── main.py                # Typer CLI entry point
 ```
 
-## 🧪 Development
+## Development
 
 ```bash
 # Clone the repo
@@ -305,7 +305,7 @@ ruff check .
 ruff format .
 ```
 
-## 🗺️ Roadmap
+## Roadmap
 
 - [ ] **Local repo support** — analyze local directories without GitHub
 - [ ] **Parallel generation** — generate multiple docs concurrently
@@ -315,7 +315,7 @@ ruff format .
 - [ ] **Multi-language prompts** — generate docs in any language
 - [ ] **Plugin system** — custom analyzers and generators
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
@@ -325,7 +325,7 @@ Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for gui
 4. Push to the branch (`git push origin feat/amazing-feature`)
 5. Open a Pull Request
 
-## 📄 License
+## License
 
 MIT — see [LICENSE](LICENSE) for details.
 
@@ -333,8 +333,8 @@ MIT — see [LICENSE](LICENSE) for details.
 
 <div align="center">
 
-**Built with ❤️ for developers who'd rather ship code than write docs.**
+**Built with  for developers who'd rather ship code than write docs.**
 
-[⬆ Back to top](#-docsmith)
+[ Back to top](#docsmith)
 
 </div>

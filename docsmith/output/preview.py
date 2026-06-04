@@ -22,7 +22,7 @@ def preview_documents(documents: list[GeneratedDocument]) -> None:
         console.print(
             Panel(
                 Markdown(doc.content),
-                title=f"📄 {doc.filename}",
+                title=f" {doc.filename}",
                 subtitle=f"Score: {doc.overall_score}/100" if doc.score else None,
                 border_style="cyan",
                 padding=(1, 2),

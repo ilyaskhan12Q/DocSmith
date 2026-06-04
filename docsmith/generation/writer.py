@@ -94,7 +94,7 @@ def generate_all_documents(
     documents = []
 
     for spec in plan.documents:
-        console.print(f"\n[bold cyan]📝 Generating {spec.filename}...[/bold cyan]")
+        console.print(f"\n[bold cyan] Generating {spec.filename}...[/bold cyan]")
         doc = generate_document(provider, ctx, plan, spec)
         documents.append(doc)
         console.print(

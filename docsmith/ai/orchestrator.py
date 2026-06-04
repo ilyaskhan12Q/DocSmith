@@ -101,7 +101,7 @@ def generate_with_retry(
             last_error = e
             if attempt < max_retries:
                 console.print(
-                    f"[yellow]⚠ Generation attempt {attempt + 1} failed, retrying...[/yellow]"
+                    f"[yellow] Generation attempt {attempt + 1} failed, retrying...[/yellow]"
                 )
             continue
 

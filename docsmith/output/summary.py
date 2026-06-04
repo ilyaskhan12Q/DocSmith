@@ -18,7 +18,7 @@ def display_summary(documents: list[GeneratedDocument], output_dir: str = "") ->
         output_dir: Output directory path (for display).
     """
     console.print()
-    console.print("[bold]📊 Documentation Report[/bold]")
+    console.print("[bold] Documentation Report[/bold]")
     console.print()
 
     table = Table(show_header=True, header_style="bold cyan")
@@ -60,7 +60,7 @@ def display_summary(documents: list[GeneratedDocument], output_dir: str = "") ->
         elif doc.review and doc.review.passed:
             status = "[green]✓ Passed[/green]"
         elif doc.review:
-            status = "[yellow]⚠ Issues[/yellow]"
+            status = "[yellow] Issues[/yellow]"
         else:
             status = "[dim]Generated[/dim]"
 
@@ -92,6 +92,6 @@ def display_summary(documents: list[GeneratedDocument], output_dir: str = "") ->
     console.print(table)
 
     if output_dir:
-        console.print(f"\n[dim]📁 Output: {output_dir}/[/dim]")
+        console.print(f"\n[dim] Output: {output_dir}/[/dim]")
 
     console.print()
