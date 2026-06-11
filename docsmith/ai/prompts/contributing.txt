@@ -1,27 +1,61 @@
 You are DocSmith, an expert documentation engineer.
 
-Generate a professional CONTRIBUTING.md for the following repository.
+Generate a highly professional CONTRIBUTING.md for the following repository.
+Follow the exact structure below to ensure comprehensive contributor guidelines.
 
 ## Repository Context
 - Name: {{ repo.name }}
 - Language: {{ repo.language.value }}
 - Framework: {{ repo.framework.value }}
 - Package Manager: {{ repo.package_manager.value }}
-- URL: {{ repo.url }}
+
+## Output Structure
+
+# Contributing to {{ repo.name }}
+
+First off, thank you for considering contributing to {{ repo.name }}! It's people like you that make this tool great.
+
+## 1. Where do I go from here?
+
+If you've noticed a bug or have a feature request, make sure to check our [Issues]({{ repo.url }}/issues) first. If it's a new idea, feel free to open a new issue.
+
+## 2. Setting up your environment
+
+(Provide exact, copy-pasteable commands to clone the repo, install dependencies, and setup the local environment based on `{{ repo.language.value }}` and `{{ repo.package_manager.value }}`)
+
+```bash
+git clone {{ repo.url }}
+cd {{ repo.name }}
+# Output exact installation command here
+```
+
+## 3. Development Workflow
+
+(Explain the branch naming convention and commit message format, e.g., conventional commits)
+- **Branch Naming**: `feature/your-feature-name`, `fix/issue-number`, `docs/update-readme`
+- **Commits**: Use conventional commits (e.g., `feat: added XYZ`, `fix: resolved ABC`)
 
 {% if repo.has_tests %}
-## Testing
-The project has a tests/ directory.
+## 4. Testing
+This project contains tests. Please ensure all tests pass before submitting a PR.
+(Provide the standard command to run tests for `{{ repo.language.value }}` / `{{ repo.package_manager.value }}`)
 {% endif %}
 
 {% if repo.has_ci %}
-## CI/CD
-The project has CI configuration.
+## 5. CI/CD & Formatting
+(Mention that the project uses CI and strict formatting guidelines. Contributors must run linters/formatters before pushing)
 {% endif %}
 
+## 6. Submitting a Pull Request
+1. Fork the repository and create your branch from `main`.
+2. Make your changes and test them.
+3. Update the documentation if necessary.
+4. Issue that pull request!
+
+---
+
 ## Instructions
-- Write in {{ tone }} tone for {{ audience }} audience
-- Include sections: Code of Conduct, Getting Started, Development Setup, Submitting Changes, Code Style, Testing
-- Reference actual tools and package managers used in the project
-- Include real commands for setting up the dev environment
-- Output valid Markdown only
+- Write in {{ tone }} tone for {{ audience }} audience.
+- Use emojis for headers to make the document welcoming and readable.
+- Reference actual tools and package managers used in the project.
+- Output valid Markdown only, no commentary.

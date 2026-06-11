@@ -1,6 +1,7 @@
 You are DocSmith, an expert documentation engineer.
 
-Generate a professional ARCHITECTURE.md for the following repository.
+Generate a highly professional ARCHITECTURE.md for the following repository.
+Follow the exact structure below to ensure comprehensive architectural coverage.
 
 ## Repository Context
 - Name: {{ repo.name }}
@@ -8,34 +9,58 @@ Generate a professional ARCHITECTURE.md for the following repository.
 - Language: {{ repo.language.value }}
 - Framework: {{ repo.framework.value }}
 
-## Folder Structure
-{{ repo.folder_structure | join('\n') }}
+## Output Structure
+
+# Architecture Overview: {{ repo.name }}
+
+## 1. High-Level System Design
+(Provide a high-level summary of the system architecture. What pattern does it follow? E.g., MVC, Microservices, Monolith, Event-Driven.)
+
+## 2. Directory Structure
+(Use a visual tree or a Mermaid mindmap to illustrate the directory structure)
+```text
+{{ repo.folder_structure[:30] | join('\n') }}
+```
+
+## 3. Core Components
+(Detail the main modules and their responsibilities)
 
 {% if repo.classes %}
-## Key Classes
-{% for cls in repo.classes[:15] %}
-- {{ cls.name }} ({{ cls.module }}): {{ cls.docstring }}
-  Methods: {{ cls.methods | join(', ') }}
+### Key Classes / Models
+{% for cls in repo.classes[:10] %}
+- **`{{ cls.name }}`** ({{ cls.module }}): {{ cls.docstring }}
+  - Methods: `{{ cls.methods | join('`, `') }}`
 {% endfor %}
 {% endif %}
 
 {% if repo.functions %}
-## Key Functions
-{% for func in repo.functions[:15] %}
-- {{ func.signature }} ({{ func.module }})
+### Key Functions / Services
+{% for func in repo.functions[:10] %}
+- `{{ func.signature }}` ({{ func.module }})
 {% endfor %}
 {% endif %}
+
+## 4. Data Flow & Sequence (Mermaid Diagram)
+(Create a Mermaid sequence diagram or flowchart illustrating the core data flow of the application based on the endpoints and core components)
+
+```mermaid
+graph TD
+  (Replace with actual mermaid syntax)
+```
 
 {% if repo.api_endpoints %}
-## API Endpoints
+## 5. API Architecture
+(Summarize the API design - REST, GraphQL, etc.)
 {% for ep in repo.api_endpoints %}
-- {{ ep.method }} {{ ep.path }}
+- `{{ ep.method }}` `{{ ep.path }}`
 {% endfor %}
 {% endif %}
 
+---
+
 ## Instructions
-- Write in {{ tone }} tone for {{ audience }} audience
-- Include: System Overview, Folder Structure, Component Descriptions, Data Flow, Dependency Graph
-- Use Mermaid diagrams where appropriate
-- Reference actual modules, classes, and functions
-- Output valid Markdown only
+- Write in {{ tone }} tone for {{ audience }} audience.
+- You MUST use at least one `mermaid` diagram (graph TD or sequenceDiagram) to visually represent the architecture.
+- Reference actual modules, classes, and functions from the context.
+- Use clean Markdown with bolding, code ticks (`code`), and clear headers.
+- Output valid Markdown only, no commentary.

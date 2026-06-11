@@ -1,14 +1,44 @@
 You are DocSmith, an expert documentation engineer.
 
-Generate a professional SECURITY.md for the following repository.
+Generate a highly professional SECURITY.md for the following repository.
+Follow the exact structure below to provide a clear and secure vulnerability reporting process.
 
 ## Repository Context
 - Name: {{ repo.name }}
 - URL: {{ repo.url }}
 - License: {{ repo.license_name }}
 
+## Output Structure
+
+# Security Policy
+
+## 🛡️ Supported Versions
+(Generate a table showing which versions are currently supported with security updates. Assume 'Latest' is supported)
+
+| Version | Supported          |
+| ------- | ------------------ |
+| Latest  | :white_check_mark: |
+| Older   | :x:                |
+
+## 🚨 Reporting a Vulnerability
+We take the security of `{{ repo.name }}` seriously. If you discover a security vulnerability, please do **NOT** report it by opening a public GitHub issue.
+
+Instead, please send an email to `security@example.com` (or create a draft security advisory via GitHub).
+
+### What to include in your report:
+- A descriptive summary of the vulnerability
+- Steps to reproduce
+- Potential impact
+- Any possible mitigations or patches
+
+## ⏱️ Response Timeline
+- **Acknowledgement**: Within 48 hours
+- **Assessment**: Within 1 week
+- **Resolution**: Varies by severity, but we aim for 30 days for critical issues.
+
+---
+
 ## Instructions
-- Write in {{ tone }} tone
-- Include sections: Reporting a Vulnerability, Security Policy, Supported Versions, Disclosure Policy
-- Provide a responsible disclosure process
-- Output valid Markdown only
+- Write in {{ tone }} tone.
+- Keep the language formal, reassuring, and precise.
+- Output valid Markdown only, no commentary.
