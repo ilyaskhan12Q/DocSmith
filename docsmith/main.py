@@ -179,7 +179,7 @@ def generate(
         False, "--quick", "-q", help="Quick mode: skip questionnaire, use defaults"
     ),
 ) -> None:
-    """ Generate documentation for a GitHub repository."""
+    """Generate documentation for a GitHub repository."""
     from docsmith.ai.orchestrator import get_provider
     from docsmith.analysis.analyzer import analyze_repository
     from docsmith.config.storage import (
@@ -295,9 +295,7 @@ def generate(
             doc.score = score_document(doc, ctx)
 
             status = (
-                "[green]✓ passed[/green]"
-                if doc.review.passed
-                else "[yellow] issues found[/yellow]"
+                "[green]✓ passed[/green]" if doc.review.passed else "[yellow] issues found[/yellow]"
             )
             console.print(f"  {doc.filename}: {status} (score: {doc.overall_score})")
 
@@ -316,7 +314,7 @@ def generate(
 def analyze(
     repo_url: str = typer.Argument(help="GitHub repository URL or owner/repo"),
 ) -> None:
-    """ Analyze a repository without generating docs."""
+    """Analyze a repository without generating docs."""
     from docsmith.analysis.analyzer import analyze_repository
     from docsmith.config.storage import load_config
     from docsmith.github.fetcher import GitHubFetcher, parse_repo_url
@@ -373,7 +371,7 @@ def analyze(
 
 @app.command()
 def config() -> None:
-    """  Configure DocSmith settings."""
+    """Configure DocSmith settings."""
     from docsmith.config.storage import config_exists
 
     _show_banner()
@@ -388,7 +386,7 @@ def config() -> None:
 def cache(
     action: str = typer.Argument(help="Action: clear"),
 ) -> None:
-    """  Manage the analysis cache."""
+    """Manage the analysis cache."""
     if action == "clear":
         from docsmith.config.storage import clear_cache
 
@@ -401,7 +399,7 @@ def cache(
 
 @app.command()
 def version() -> None:
-    """ Show DocSmith version."""
+    """Show DocSmith version."""
     console.print(f"DocSmith v{__version__}")
 
 
@@ -412,7 +410,7 @@ def version() -> None:
 def main(
     ctx: typer.Context,
 ) -> None:
-    """ DocSmith — AI-powered documentation engineer."""
+    """DocSmith — AI-powered documentation engineer."""
     if ctx.invoked_subcommand is None:
         _show_banner()
         console.print("Run [bold cyan]docsmith --help[/bold cyan] for usage.\n")
