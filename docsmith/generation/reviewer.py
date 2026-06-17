@@ -7,6 +7,8 @@ import re
 from docsmith.models.generated_document import GeneratedDocument, ReviewIssue, ReviewResult
 from docsmith.models.repo_context import RepoContext
 
+MIN_DOCUMENT_LENGTH = 200
+
 
 def review_document(doc: GeneratedDocument, ctx: RepoContext) -> ReviewResult:
     """Review a generated document for common issues.
@@ -28,25 +30,17 @@ def review_document(doc: GeneratedDocument, ctx: RepoContext) -> ReviewResult:
 
     content = doc.content
 
-    # Check for placeholder content
     issues.extend(_check_placeholders(content))
-
-    # Check for hallucinated commands
     issues.extend(_check_hallucinated_commands(content, ctx))
-
-    # Check for missing sections
     issues.extend(_check_missing_sections(doc))
-
-    # Check for broken links/paths
     issues.extend(_check_broken_references(content, ctx))
 
-    # Check minimum content length
-    if len(content) < 200:
+    if len(content) < MIN_DOCUMENT_LENGTH:
         issues.append(
             ReviewIssue(
                 severity="critical",
                 category="incomplete",
-                description="Document is too short (less than 200 characters)",
+                description=f"Document is too short (less than {MIN_DOCUMENT_LENGTH} characters)",
                 suggestion="Regenerate with more detail",
             )
         )
