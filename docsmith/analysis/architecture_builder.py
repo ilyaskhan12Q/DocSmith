@@ -41,7 +41,6 @@ def extract_env_variables(files: list[FileInfo]) -> list[str]:
             for match in pattern.finditer(f.content):
                 env_vars.add(match.group(1))
 
-    # Also parse .env.example files
     for f in files:
         if ".env" in f.path and f.content:
             for line in f.content.splitlines():
@@ -54,6 +53,16 @@ def extract_env_variables(files: list[FileInfo]) -> list[str]:
     return sorted(env_vars)
 
 
+def _extract_docstring(lines: list[str], line_index: int) -> str:
+    """Extract a docstring from the line immediately following the given index."""
+    if line_index + 1 >= len(lines):
+        return ""
+    next_line = lines[line_index + 1].strip()
+    if next_line.startswith('"""') or next_line.startswith("'''"):
+        return next_line.strip('"').strip("'")
+    return ""
+
+
 def _extract_python_functions(f: FileInfo) -> list[FunctionInfo]:
     """Extract public Python functions (top-level only)."""
     functions = []
@@ -61,7 +70,6 @@ def _extract_python_functions(f: FileInfo) -> list[FunctionInfo]:
     i = 0
     while i < len(lines):
         line = lines[i]
-        # Top-level function (no indentation)
         match = re.match(r"^def\s+(\w+)\(([^)]*)\)(?:\s*->\s*(.+))?\s*:", line)
         if match:
             name = match.group(1)
@@ -71,14 +79,8 @@ def _extract_python_functions(f: FileInfo) -> list[FunctionInfo]:
                 if ret:
                     sig += f" -> {ret.strip()}"
 
-                # Get docstring
-                docstring = ""
-                if i + 1 < len(lines):
-                    next_line = lines[i + 1].strip()
-                    if next_line.startswith('"""') or next_line.startswith("'''"):
-                        docstring = next_line.strip('"').strip("'")
+                docstring = _extract_docstring(lines, i)
 
-                # Check for decorators above
                 decorators = []
                 j = i - 1
                 while j >= 0 and lines[j].strip().startswith("@"):
@@ -112,19 +114,12 @@ def _extract_python_classes(f: FileInfo) -> list[ClassInfo]:
                 bases_str = match.group(2) or ""
                 bases = [b.strip() for b in bases_str.split(",") if b.strip()]
 
-                # Get docstring
-                docstring = ""
-                if i + 1 < len(lines):
-                    next_line = lines[i + 1].strip()
-                    if next_line.startswith('"""') or next_line.startswith("'''"):
-                        docstring = next_line.strip('"').strip("'")
+                docstring = _extract_docstring(lines, i)
 
-                # Find public methods
                 methods = []
                 j = i + 1
                 while j < len(lines):
                     method_line = lines[j]
-                    # Stop at next class/top-level def
                     if method_line and not method_line[0].isspace() and method_line.strip():
                         break
                     method_match = re.match(r"\s+def\s+(\w+)", method_line)
