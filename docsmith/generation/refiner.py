@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from docsmith.ai.orchestrator import generate_with_retry
 from docsmith.ai.providers.base import BaseProvider
+from docsmith.generation.writer import _clean_response
 from docsmith.models.generated_document import GeneratedDocument
 
 
@@ -45,17 +46,7 @@ Output the corrected Markdown only, no commentary."""
     )
 
     refined_content = generate_with_retry(provider, prompt, system_prompt)
-
-    # Clean up
-    refined_content = refined_content.strip()
-    if refined_content.startswith("```"):
-        refined_content = (
-            refined_content.split("\n", 1)[1] if "\n" in refined_content else refined_content
-        )
-    if refined_content.endswith("```"):
-        refined_content = refined_content[:-3].strip()
-
-    doc.content = refined_content
+    doc.content = _clean_response(refined_content)
     doc.refined = True
 
     return doc

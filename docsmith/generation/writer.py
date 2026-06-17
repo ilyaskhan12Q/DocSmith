@@ -150,17 +150,13 @@ Output valid Markdown only."""
 
 
 def _clean_response(content: str) -> str:
-    """Clean up AI response — remove markdown fences if wrapped."""
+    """Strip wrapping markdown code fences from AI response if present."""
     content = content.strip()
-
-    # Remove wrapping ```markdown ... ``` if present
-    if content.startswith("```markdown"):
-        content = content[len("```markdown") :].strip()
-    if content.startswith("```md"):
-        content = content[len("```md") :].strip()
-    if content.startswith("```"):
-        content = content[3:].strip()
+    fence_prefixes = ("```markdown", "```md", "```")
+    for prefix in fence_prefixes:
+        if content.startswith(prefix):
+            content = content[len(prefix) :].strip()
+            break
     if content.endswith("```"):
         content = content[:-3].strip()
-
     return content
