@@ -46,7 +46,7 @@ $ docsmith generate https://github.com/ilyaskhan12Q/Docsmith.git
  / /_/ / /_/ / /__ ___/ / / / / / / / /_/ / / /
 /_____/\____/\___//____/_/ /_/ /_/_/\__/_/ /_/
 
-  v0.1.0 — AI-powered documentation engineer
+  v0.2.1 — AI-powered documentation engineer
 
  Analyzing tiangolo/fastapi...
 ✓ Repository metadata fetched

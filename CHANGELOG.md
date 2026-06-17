@@ -5,6 +5,17 @@ All notable changes to DocSmith will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.1] - 2026-06-17
+
+### Added
+- Stable release of v0.2.1 with integrated clean-code guidelines
+
+### Refactored
+- Extracted magic numbers into constants in `scorer.py` and `reviewer.py`
+- Simplified framework detection with data-driven lookup
+- Reused Markdown responses clean up utility between writer and refiner
+- Removed redundant continue/empty instructions and comments across modules
+
 ## [0.1.0] - 2026-06-04
 
 ### Added
