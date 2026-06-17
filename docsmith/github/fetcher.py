@@ -10,12 +10,12 @@ import requests
 from rich.console import Console
 from rich.progress import Progress, SpinnerColumn, TextColumn
 
+from docsmith import __version__
+
 console = Console()
 
-# GitHub API base
 GITHUB_API = "https://api.github.com"
 
-# Files to prioritize fetching (in order of importance)
 PRIORITY_FILES = [
     "README.md",
     "readme.md",
@@ -45,7 +45,6 @@ PRIORITY_FILES = [
     "ARCHITECTURE.md",
 ]
 
-# Entry point patterns to look for
 ENTRY_POINT_PATTERNS = [
     "main.py",
     "app.py",
@@ -68,7 +67,6 @@ ENTRY_POINT_PATTERNS = [
     "Program.cs",
 ]
 
-# Config file patterns
 CONFIG_PATTERNS = [
     ".env",
     ".env.example",
@@ -85,10 +83,7 @@ CONFIG_PATTERNS = [
     "ruff.toml",
 ]
 
-# Max file size to fetch (100KB)
 MAX_FILE_SIZE = 100_000
-
-# Max files to fetch content for
 MAX_FILES_TO_FETCH = 30
 
 
@@ -151,7 +146,7 @@ class GitHubFetcher:
         self.session.headers.update(
             {
                 "Accept": "application/vnd.github.v3+json",
-                "User-Agent": "DocSmith/0.1.0",
+                "User-Agent": f"DocSmith/{__version__}",
             }
         )
         if token:
@@ -305,7 +300,6 @@ class GitHubFetcher:
             TextColumn("[progress.description]{task.description}"),
             console=console,
         ) as progress:
-            # 1. Fetch metadata
             task = progress.add_task("Fetching repository metadata...", total=None)
             metadata = self.fetch_repo_metadata(owner, repo)
             if not metadata:
@@ -314,7 +308,6 @@ class GitHubFetcher:
             result["metadata"] = metadata
             progress.update(task, description="✓ Repository metadata fetched")
 
-            # 2. Fetch tree
             branch = metadata.get("default_branch", "main")
             progress.update(task, description="Fetching file tree...")
             tree = self.fetch_repo_tree(owner, repo, branch)
@@ -322,14 +315,12 @@ class GitHubFetcher:
                 result["tree"] = tree
             progress.update(task, description=f"✓ File tree fetched ({len(tree or [])} entries)")
 
-            # 3. Identify important files
             files_to_fetch = self._select_important_files(tree or [])
             progress.update(
                 task,
                 description=f"Fetching {len(files_to_fetch)} important files...",
             )
 
-            # 4. Fetch file contents
             for filepath in files_to_fetch:
                 content = self.fetch_file_content(owner, repo, filepath)
                 if content is not None:
@@ -340,7 +331,6 @@ class GitHubFetcher:
                 description=f"✓ Fetched {len(result['files'])} files",
             )
 
-            # 5. Fetch recent commits
             progress.update(task, description="Fetching recent commits...")
             result["commits"] = self.fetch_recent_commits(owner, repo)
             progress.update(
@@ -363,33 +353,29 @@ class GitHubFetcher:
             tree: Repository file tree.
 
         Returns:
-            List of file paths to fetch.
+            List of file paths to fetch, capped at MAX_FILES_TO_FETCH.
         """
         selected: list[str] = []
         blob_paths = [entry["path"] for entry in tree if entry.get("type") == "blob"]
 
-        # 1. Priority files
         for pattern in PRIORITY_FILES:
             for path in blob_paths:
                 if path == pattern or path.endswith(f"/{pattern}"):
                     if path not in selected:
                         selected.append(path)
 
-        # 2. Entry points
         for pattern in ENTRY_POINT_PATTERNS:
             for path in blob_paths:
                 basename = path.rsplit("/", 1)[-1]
                 if basename == pattern and path not in selected:
                     selected.append(path)
 
-        # 3. Config files
         for pattern in CONFIG_PATTERNS:
             for path in blob_paths:
                 basename = path.rsplit("/", 1)[-1]
                 if basename.startswith(pattern) and path not in selected:
                     selected.append(path)
 
-        # 4. Source files (limited — grab top-level module inits and key files)
         source_dirs = {"src", "lib", "app", "pkg", "cmd", "internal"}
         for path in blob_paths:
             parts = path.split("/")
@@ -398,7 +384,6 @@ class GitHubFetcher:
                     if path not in selected:
                         selected.append(path)
 
-        # 5. Top-level Python/JS/TS files (often important)
         for path in blob_paths:
             if "/" not in path and path not in selected:
                 ext = path.rsplit(".", 1)[-1] if "." in path else ""
