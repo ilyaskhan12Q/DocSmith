@@ -18,7 +18,6 @@ app = typer.Typer(
 )
 console = Console()
 
-# ── Banner ──────────────────────────────────────────────────────────────────
 
 BANNER = r"""
     ____             _____           _ __  __
@@ -34,9 +33,6 @@ def _show_banner() -> None:
     banner_text = Text(BANNER, style="bold cyan")
     console.print(banner_text)
     console.print(f"  [dim]v{__version__} — AI-powered documentation engineer[/dim]\n")
-
-
-# ── Setup Wizard ────────────────────────────────────────────────────────────
 
 
 def _run_setup_wizard() -> None:
@@ -101,9 +97,6 @@ def _run_setup_wizard() -> None:
     console.print("[bold cyan]  docsmith generate <repo-url>[/bold cyan]\n")
 
 
-# ── Interactive Questionnaire ───────────────────────────────────────────────
-
-
 def _ask_generation_options() -> dict:
     """Run the interactive questionnaire for document generation options."""
     import questionary
@@ -162,9 +155,6 @@ def _ask_generation_options() -> dict:
         "use_emojis": use_emojis,
         "include_badges": include_badges,
     }
-
-
-# ── Commands ────────────────────────────────────────────────────────────────
 
 
 @app.command()
@@ -372,14 +362,8 @@ def analyze(
 @app.command()
 def config() -> None:
     """Configure DocSmith settings."""
-    from docsmith.config.storage import config_exists
-
     _show_banner()
-
-    if not config_exists():
-        _run_setup_wizard()
-    else:
-        _run_setup_wizard()  # Re-run wizard for reconfiguration
+    _run_setup_wizard()
 
 
 @app.command()
@@ -401,9 +385,6 @@ def cache(
 def version() -> None:
     """Show DocSmith version."""
     console.print(f"DocSmith v{__version__}")
-
-
-# ── Default command (run generate when URL is passed directly) ──────────────
 
 
 @app.callback(invoke_without_command=True)
