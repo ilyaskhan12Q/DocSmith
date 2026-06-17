@@ -94,14 +94,13 @@ def load_cached_context(repo_full_name: str) -> dict | None:
         data = json.loads(cache_path.read_text(encoding="utf-8"))
         config = load_config()
 
-        # Check TTL
         cached_at = data.get("_cached_at", 0)
         ttl_seconds = config.cache_ttl_hours * 3600
         if time.time() - cached_at > ttl_seconds:
             return None
 
         return data
-    except (json.JSONDecodeError, Exception):
+    except Exception:
         return None
 
 
