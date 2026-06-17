@@ -103,6 +103,5 @@ def generate_with_retry(
                 console.print(
                     f"[yellow] Generation attempt {attempt + 1} failed, retrying...[/yellow]"
                 )
-            continue
 
     raise RuntimeError(f"Generation failed after {max_retries + 1} attempts: {last_error}")
