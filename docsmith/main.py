@@ -146,7 +146,14 @@ def _ask_generation_options() -> dict:
 
     # Options
     use_emojis = questionary.confirm("Include emojis?", default=True).ask()
+    if use_emojis is None:
+        console.print("[red]Setup cancelled.[/red]")
+        raise typer.Exit(1)
+
     include_badges = questionary.confirm("Include shields.io badges?", default=True).ask()
+    if include_badges is None:
+        console.print("[red]Setup cancelled.[/red]")
+        raise typer.Exit(1)
 
     return {
         "doc_types": [DocumentType(d) for d in doc_choices],
@@ -260,8 +267,8 @@ def generate(
             ],
             "audience": Audience.INTERMEDIATE,
             "tone": Tone.PROFESSIONAL,
-            "use_emojis": True,
-            "include_badges": True,
+            "use_emojis": config.use_emojis,
+            "include_badges": config.include_badges,
         }
     else:
         console.print()
@@ -279,13 +286,21 @@ def generate(
 
     # Review & Score
     if not skip_review:
+        from docsmith.generation.refiner import refine_document
+
         console.print("\n[bold] Reviewing documentation...[/bold]")
         for doc in documents:
             doc.review = review_document(doc, ctx)
             doc.score = score_document(doc, ctx)
 
+            if not doc.review.passed:
+                console.print(f"  {doc.filename}: [yellow] issues found, refining...[/yellow]")
+                doc = refine_document(provider, doc)
+                doc.review = review_document(doc, ctx)
+                doc.score = score_document(doc, ctx)
+
             status = (
-                "[green]✓ passed[/green]" if doc.review.passed else "[yellow] issues found[/yellow]"
+                "[green]✓ passed[/green]" if doc.review.passed else "[yellow] issues remain[/yellow]"
             )
             console.print(f"  {doc.filename}: {status} (score: {doc.overall_score})")
 

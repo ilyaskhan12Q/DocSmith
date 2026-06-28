@@ -35,9 +35,12 @@ def load_config() -> DocSmithConfig:
         try:
             data = json.loads(CONFIG_FILE.read_text(encoding="utf-8"))
             return DocSmithConfig.model_validate(data)
-        except (json.JSONDecodeError, Exception) as e:
-            console.print(f"[yellow] Could not parse config file: {e}[/yellow]")
-            console.print("[dim]Using default configuration.[/dim]")
+        except json.JSONDecodeError as e:
+            console.print(f"[yellow] Config file is corrupted (invalid JSON): {e}[/yellow]")
+            console.print("[dim]Using default configuration. Run `docsmith config` to reset.[/dim]")
+        except Exception as e:
+            console.print(f"[yellow] Could not read config file: {e}[/yellow]")
+            console.print("[dim]Check file permissions at: {CONFIG_FILE}[/dim]")
 
     return DocSmithConfig()
 

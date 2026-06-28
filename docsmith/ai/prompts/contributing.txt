@@ -2,6 +2,7 @@ You are DocSmith, an expert documentation engineer.
 
 Generate a highly professional CONTRIBUTING.md for the following repository.
 Follow the exact structure below to ensure comprehensive contributor guidelines.
+{% if not use_emojis %}IMPORTANT: Do NOT use any emojis anywhere in the document. Use plain text headings only.{% endif %}
 
 ## Repository Context
 - Name: {{ repo.name }}
@@ -15,11 +16,19 @@ Follow the exact structure below to ensure comprehensive contributor guidelines.
 
 First off, thank you for considering contributing to {{ repo.name }}! It's people like you that make this tool great.
 
+{% if use_emojis %}
+## 1. 🗺️ Where do I go from here?
+{% else %}
 ## 1. Where do I go from here?
+{% endif %}
 
 If you've noticed a bug or have a feature request, make sure to check our [Issues]({{ repo.url }}/issues) first. If it's a new idea, feel free to open a new issue.
 
+{% if use_emojis %}
+## 2. ⚙️ Setting up your environment
+{% else %}
 ## 2. Setting up your environment
+{% endif %}
 
 (Provide exact, copy-pasteable commands to clone the repo, install dependencies, and setup the local environment based on `{{ repo.language.value }}` and `{{ repo.package_manager.value }}`)
 
@@ -29,24 +38,40 @@ cd {{ repo.name }}
 # Output exact installation command here
 ```
 
+{% if use_emojis %}
+## 3. 🌿 Development Workflow
+{% else %}
 ## 3. Development Workflow
+{% endif %}
 
 (Explain the branch naming convention and commit message format, e.g., conventional commits)
 - **Branch Naming**: `feature/your-feature-name`, `fix/issue-number`, `docs/update-readme`
 - **Commits**: Use conventional commits (e.g., `feat: added XYZ`, `fix: resolved ABC`)
 
 {% if repo.has_tests %}
+{% if use_emojis %}
+## 4. 🧪 Testing
+{% else %}
 ## 4. Testing
+{% endif %}
 This project contains tests. Please ensure all tests pass before submitting a PR.
 (Provide the standard command to run tests for `{{ repo.language.value }}` / `{{ repo.package_manager.value }}`)
 {% endif %}
 
 {% if repo.has_ci %}
+{% if use_emojis %}
+## 5. 🔄 CI/CD & Formatting
+{% else %}
 ## 5. CI/CD & Formatting
+{% endif %}
 (Mention that the project uses CI and strict formatting guidelines. Contributors must run linters/formatters before pushing)
 {% endif %}
 
+{% if use_emojis %}
+## 6. 🚀 Submitting a Pull Request
+{% else %}
 ## 6. Submitting a Pull Request
+{% endif %}
 1. Fork the repository and create your branch from `main`.
 2. Make your changes and test them.
 3. Update the documentation if necessary.
@@ -56,6 +81,10 @@ This project contains tests. Please ensure all tests pass before submitting a PR
 
 ## Instructions
 - Write in {{ tone }} tone for {{ audience }} audience.
+{% if use_emojis %}
 - Use emojis for headers to make the document welcoming and readable.
+{% else %}
+- Do NOT use any emojis. Use plain text headings only.
+{% endif %}
 - Reference actual tools and package managers used in the project.
 - Output valid Markdown only, no commentary.

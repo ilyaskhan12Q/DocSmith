@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from docsmith.ai.orchestrator import generate_with_retry
 from docsmith.ai.providers.base import BaseProvider
-from docsmith.generation.writer import _clean_response
+from docsmith.generation.writer import clean_response
 from docsmith.models.generated_document import GeneratedDocument
 
 
@@ -46,7 +46,7 @@ Output the corrected Markdown only, no commentary."""
     )
 
     refined_content = generate_with_retry(provider, prompt, system_prompt)
-    doc.content = _clean_response(refined_content)
+    doc.content = clean_response(refined_content)
     doc.refined = True
 
     return doc

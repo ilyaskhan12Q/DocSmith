@@ -2,6 +2,7 @@ You are DocSmith, an expert documentation engineer.
 
 Generate a highly professional API_REFERENCE.md for the following repository.
 Follow the exact structure below to ensure clear, developer-friendly API documentation.
+{% if not use_emojis %}IMPORTANT: Do NOT use any emojis anywhere in the document. Use plain text headings only.{% endif %}
 
 ## Repository Context
 - Name: {{ repo.name }}
@@ -12,7 +13,11 @@ Follow the exact structure below to ensure clear, developer-friendly API documen
 # API Reference
 
 {% if repo.api_endpoints %}
+{% if use_emojis %}
 ## 🔌 API Endpoints Summary
+{% else %}
+## API Endpoints Summary
+{% endif %}
 (Provide a markdown table summarizing all endpoints: Method, Path, Description)
 
 ## Endpoint Details
@@ -39,7 +44,11 @@ Follow the exact structure below to ensure clear, developer-friendly API documen
 {% endif %}
 
 {% if repo.cli_commands %}
+{% if use_emojis %}
 ## 💻 CLI Commands
+{% else %}
+## CLI Commands
+{% endif %}
 {% for cmd in repo.cli_commands %}
 ### `{{ cmd.name }}`
 > {{ cmd.description }}
@@ -55,7 +64,11 @@ Follow the exact structure below to ensure clear, developer-friendly API documen
 {% endif %}
 
 {% if repo.classes %}
+{% if use_emojis %}
 ## 🧩 Core Classes
+{% else %}
+## Core Classes
+{% endif %}
 {% for cls in repo.classes %}
 ### `{{ cls.name }}` ({{ cls.module }})
 **Bases**: `{{ cls.bases | join('`, `') }}`
@@ -65,7 +78,11 @@ Follow the exact structure below to ensure clear, developer-friendly API documen
 {% endif %}
 
 {% if repo.functions %}
+{% if use_emojis %}
 ## 🛠️ Global Functions
+{% else %}
+## Global Functions
+{% endif %}
 {% for func in repo.functions %}
 ### `{{ func.signature }}` ({{ func.module }})
 > {{ func.docstring }}
@@ -76,7 +93,11 @@ Follow the exact structure below to ensure clear, developer-friendly API documen
 
 ## Instructions
 - Write in {{ tone }} tone for {{ audience }} audience.
+{% if use_emojis %}
 - Use emojis for section headers to improve readability.
+{% else %}
+- Do NOT use any emojis. Use plain text headings only.
+{% endif %}
 - Document every endpoint, command, class, and function provided.
 - Ensure all code snippets use proper Markdown formatting (e.g., json, bash, python).
 - Output valid Markdown only, no commentary.

@@ -65,7 +65,6 @@ def _check_placeholders(content: str) -> list[ReviewIssue]:
         r"<your[- ]",
         r"<insert ",
         r"lorem ipsum",
-        r"example\.com",
         r"your-username",
     ]
     for pattern in placeholders:
@@ -149,7 +148,12 @@ def _check_broken_references(content: str, ctx: RepoContext) -> list[ReviewIssue
         if "/" in ref_path and ref_path not in known_paths:
             # Check if parent dir exists
             parent = ref_path.split("/")[0]
-            if parent not in ctx.folder_structure and parent not in {"src", "lib", "docs"}:
+            _common_dirs = {
+                "src", "lib", "docs", "tests", "test", "scripts", "config",
+                "public", "static", "assets", "app", "pkg", "cmd", "internal",
+                "dist", "build", "bin", "examples", "example",
+            }
+            if parent not in ctx.folder_structure and parent not in _common_dirs:
                 issues.append(
                     ReviewIssue(
                         severity="info",

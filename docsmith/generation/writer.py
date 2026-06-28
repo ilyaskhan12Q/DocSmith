@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 import time
 from pathlib import Path
 
@@ -64,7 +65,11 @@ def generate_document(
     content = generate_with_retry(provider, prompt, SYSTEM_PROMPT)
 
     # Clean up the response
-    content = _clean_response(content)
+    content = clean_response(content)
+
+    # Safety net: strip emojis if the user opted out
+    if not plan.use_emojis:
+        content = _strip_emojis(content)
 
     elapsed = time.time() - start_time
 
@@ -145,11 +150,11 @@ Planned sections:
 {spec.special_instructions}
 
 Write in {plan.tone.value} tone for {plan.audience.value} audience.
-{"Use emojis for section headers." if plan.use_emojis else ""}
+{"Use emojis for section headers." if plan.use_emojis else "Do NOT use any emojis anywhere in the document."}
 Output valid Markdown only."""
 
 
-def _clean_response(content: str) -> str:
+def clean_response(content: str) -> str:
     """Strip wrapping markdown code fences from AI response if present."""
     content = content.strip()
     fence_prefixes = ("```markdown", "```md", "```")
@@ -160,3 +165,32 @@ def _clean_response(content: str) -> str:
     if content.endswith("```"):
         content = content[:-3].strip()
     return content
+
+
+# Keep old private name as alias for backwards compatibility
+_clean_response = clean_response
+
+
+def _strip_emojis(content: str) -> str:
+    """Remove Unicode emoji characters from content as a post-processing safety net.
+
+    Applied only when use_emojis=False to guard against LLMs that ignore the
+    no-emoji instruction in the prompt.
+    """
+    # Matches the broad Unicode emoji ranges: emoticons, symbols, misc pictographs
+    emoji_pattern = re.compile(
+        "["
+        "\U0001F600-\U0001F64F"  # emoticons
+        "\U0001F300-\U0001F5FF"  # symbols & pictographs
+        "\U0001F680-\U0001F6FF"  # transport & map
+        "\U0001F1E0-\U0001F1FF"  # flags
+        "\U00002700-\U000027BF"  # dingbats
+        "\U0001F900-\U0001F9FF"  # supplemental symbols
+        "\U00002600-\U000026FF"  # misc symbols
+        "\U00002B50-\U00002B55"  # stars
+        "\U0000231A-\U0000231B"  # watch / hourglass
+        "\U000025AA-\U000025FE"  # geometric shapes
+        "]+",
+        flags=re.UNICODE,
+    )
+    return emoji_pattern.sub("", content)

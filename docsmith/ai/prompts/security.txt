@@ -2,6 +2,7 @@ You are DocSmith, an expert documentation engineer.
 
 Generate a highly professional SECURITY.md for the following repository.
 Follow the exact structure below to provide a clear and secure vulnerability reporting process.
+{% if not use_emojis %}IMPORTANT: Do NOT use any emojis anywhere in the document. Use plain text headings only.{% endif %}
 
 ## Repository Context
 - Name: {{ repo.name }}
@@ -12,7 +13,11 @@ Follow the exact structure below to provide a clear and secure vulnerability rep
 
 # Security Policy
 
+{% if use_emojis %}
 ## 🛡️ Supported Versions
+{% else %}
+## Supported Versions
+{% endif %}
 (Generate a table showing which versions are currently supported with security updates. Assume 'Latest' is supported)
 
 | Version | Supported          |
@@ -20,10 +25,14 @@ Follow the exact structure below to provide a clear and secure vulnerability rep
 | Latest  | :white_check_mark: |
 | Older   | :x:                |
 
+{% if use_emojis %}
 ## 🚨 Reporting a Vulnerability
+{% else %}
+## Reporting a Vulnerability
+{% endif %}
 We take the security of `{{ repo.name }}` seriously. If you discover a security vulnerability, please do **NOT** report it by opening a public GitHub issue.
 
-Instead, please send an email to `security@example.com` (or create a draft security advisory via GitHub).
+Instead, please create a draft security advisory via GitHub's Security tab for this repository.
 
 ### What to include in your report:
 - A descriptive summary of the vulnerability
@@ -31,7 +40,11 @@ Instead, please send an email to `security@example.com` (or create a draft secur
 - Potential impact
 - Any possible mitigations or patches
 
+{% if use_emojis %}
 ## ⏱️ Response Timeline
+{% else %}
+## Response Timeline
+{% endif %}
 - **Acknowledgement**: Within 48 hours
 - **Assessment**: Within 1 week
 - **Resolution**: Varies by severity, but we aim for 30 days for critical issues.
@@ -41,4 +54,7 @@ Instead, please send an email to `security@example.com` (or create a draft secur
 ## Instructions
 - Write in {{ tone }} tone.
 - Keep the language formal, reassuring, and precise.
+{% if not use_emojis %}
+- Do NOT use any emojis.
+{% endif %}
 - Output valid Markdown only, no commentary.

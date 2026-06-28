@@ -93,11 +93,11 @@ def generate_with_retry(
     Raises:
         RuntimeError: If all retries fail.
     """
-    last_error = None
+    last_error: Exception | None = None
     for attempt in range(max_retries + 1):
         try:
             return provider.generate(prompt, system_prompt)
-        except RuntimeError as e:
+        except Exception as e:
             last_error = e
             if attempt < max_retries:
                 console.print(
