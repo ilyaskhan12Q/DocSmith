@@ -333,7 +333,7 @@ MIT — see [LICENSE](LICENSE) for details.
 
 <div align="center">
 
-**Built with  for developers who'd rather ship code than write docs.**
+**Built for developers who'd rather ship code than write docs.**
 
 [ Back to top](#docsmith)
 
